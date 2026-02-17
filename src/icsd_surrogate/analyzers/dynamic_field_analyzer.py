@@ -6,8 +6,6 @@ from typing import TYPE_CHECKING, cast
 from icsd_surrogate.model.raw_field import FieldBehavior, RawField
 
 if TYPE_CHECKING:
-    from pyshark.packet.packet import Packet
-
     from icsd_surrogate.cfg.log_configuration import CustomLogger
 
 import difflib
@@ -15,8 +13,6 @@ import difflib
 import plotly.graph_objects as go
 from protocol_validator.protocol_info import ProtocolInfo
 from protocol_validator.validator_base import ValidatorBase
-from protocol_validator.validator_error import ValidatorError
-from protocol_validator.validator_wireshark_error import ValidatorWiresharkError
 
 
 class DynamicFieldAnalyzer:
@@ -158,34 +154,25 @@ class DynamicFieldAnalyzer:
 
             self.logger.info(f"[MUTATION] Field: {f}")
 
-            f.valid_values = []
+            f.valid_values: list[str] = []
             for mutation_hex_tuple in self.get_random_combinations(f.size, sample_size=1000):
-                mutation_hex = "".join(f"{b:02x}" for b in mutation_hex_tuple)
+                mutation_hex: str = "".join(f"{b:02x}" for b in mutation_hex_tuple)
 
                 self.logger.debug(f"    [*] Field: {f.name}, testing mutation value: {mutation_hex}, original: {seed[f.relative_pos * 2 : (f.relative_pos + f.size) * 2]}")
                 response = b"0"
                 try:
-                    mutated_hex = self._inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields).hex()
-                    packet: Packet = self._validator.validate(mutated_hex, is_request=True)
+                    mutated_hex: str = self._inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields).hex()
+                    self._validator.validate(mutated_hex, is_request=True)
                     self._sock.sendall(bytes.fromhex(mutated_hex))
-                    response = self._sock.recv(1024)
+                    response: bytes = self._sock.recv(1024)
                     self._responses.append(response.hex())
+
                     if len(response) > 0 and response.hex()[:2] != "0000":
                         self.logger.debug(f"    [OK] Field: {f.name}, Mutation Accepted: {mutation_hex}, Response: {response.hex()}")
                         f.valid_values.append(mutation_hex)
-                except ValidatorError as e:
-                    self.logger.trace("    [!] Mutation Rejected")
-                    if f.invalid_values.get(str(e)) is None:
-                        f.invalid_values[str(e)] = []
-                    f.invalid_values[str(e)].append(mutation_hex)
-                except ValidatorWiresharkError as e:
-                    self.logger.trace("    [!] Wireshark Error")
-                    if f.invalid_values.get(str(e)) is None:
-                        f.invalid_values[str(e)] = []
-                    f.invalid_values[str(e)].append(mutation_hex)
-                    # f.set_behavior(FieldBehavior.WIRESHARK)
+
                 except Exception as e:
-                    self.logger.trace("    [ERROR] Exception during mutation testing:")
+                    self.logger.trace(f"    [ERROR] Exception during mutation testing: {e}")
                     if f.invalid_values.get(str(e)) is None:
                         f.invalid_values[str(e)] = []
                     f.invalid_values[str(e)].append(mutation_hex)
@@ -210,6 +197,9 @@ class DynamicFieldAnalyzer:
                     f.set_behavior(FieldBehavior.FUZZABLE)
                     break
 
+        self.analyze2(unique_fields, seed)
+
+    def analyze2(self, unique_fields: list[RawField], seed: str) -> None:
         for f in unique_fields:
             for _ in range(100):
                 if f.name == "modbus.func_code":
@@ -253,7 +243,8 @@ class DynamicFieldAnalyzer:
                 orig = payload_copy[start_crc:end_crc]
                 payload_copy = payload_copy[:start_crc] + payload_len.to_bytes(crc.size, byteorder="big") + payload_copy[end_crc:]
                 self.logger.trace(
-                    f"    [*] Recalculating Length field: {crc.name} at pos {crc.relative_pos} size {crc.size}, prev: {orig.hex()}, calculated: {payload_len.to_bytes(crc.size, byteorder='little').hex()}"
+                    f"    [*] Recalculating Length field: {crc.name} at pos {crc.relative_pos} size {crc.size}, prev: {orig.hex()},"
+                    f"calculated: {payload_len.to_bytes(crc.size, byteorder='little').hex()}"
                 )
 
             if "crc" in crc.name.lower() and target_field.name != crc.name:

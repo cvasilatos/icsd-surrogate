@@ -8,6 +8,7 @@
   "ty.trace.server": "verbose",
   "ty.diagnosticMode": "workspace",
   "ruff.nativeServer": "on",
+  "ruff.enable": true,
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,

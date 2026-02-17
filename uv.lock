@@ -445,6 +445,7 @@ dependencies = [
     { name = "readmeai" },
     { name = "rich" },
     { name = "ruff" },
+    { name = "ty" },
 ]
 
 [package.metadata]
@@ -458,6 +459,7 @@ requires-dist = [
     { name = "readmeai" },
     { name = "rich", specifier = ">=14.3.2" },
     { name = "ruff" },
+    { name = "ty", specifier = ">=0.0.17" },
 ]
 
 [[package]]
