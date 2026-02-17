@@ -1,0 +1,1347 @@
+2026-02-17 22:20:53,120 - [INFO] - protocol_s - Starting Modbus TCP server at localhost:5020
+2026-02-17 22:20:53,120 - [INFO] - __main__.P - [+] Started MBTCP server on port 5020
+2026-02-17 22:20:53,121 - [INFO] - pymodbus.l - Server listening.
+2026-02-17 22:20:56,125 - [INFO] - __main__.P - [+] Analyzing seed packet: 00540000000b00100000000204ffffffff
+2026-02-17 22:20:56,127 - [INFO] - icsd_surro - [+] Connected to MBTCP server on port 5020
+2026-02-17 22:20:56,699 - [INFO] - icsd_surro - [+] Dissecting packet: 00540000000b00100000000204ffffffff : 005400000006001000000002 for protocol layers: ['mbtcp', 'modbus']
+2026-02-17 22:20:56,700 - [WARNING] - icsd_surro -     [!] Skipping..Overlapping field with larger size detected at pos 61, Value: Write Multiple Registers (16)
+2026-02-17 22:20:56,700 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,701 - [INFO] - icsd_surro - [?] Starting Dynamic Analysis on 10 unique fields...
+
+2026-02-17 22:20:56,701 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: mbtcp.trans_id,   [33mW_Name: mbtcp.trans_id,   [34mLayer: mbtcp,   [35mD_Name: Transaction Identifier: 84,   [36mPos: 54 (+0),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,844 - [INFO] - icsd_surro -     [*] Field mbtcp.trans_id valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,845 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: mbtcp.prot_id,   [33mW_Name: mbtcp.prot_id,   [34mLayer: mbtcp,   [35mD_Name: Protocol Identifier: 0,   [36mPos: 56 (+2),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,880 - [INFO] - icsd_surro -     [!] Field mbtcp.prot_id has a large invalid category, marking as CONSTRAINED.
+2026-02-17 22:20:56,880 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: mbtcp.len,   [33mW_Name: mbtcp.len,   [34mLayer: mbtcp,   [35mD_Name: Length: 11,   [36mPos: 58 (+4),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,896 - [INFO] - icsd_surro -     [!] Field mbtcp.len has a large invalid category, marking as CONSTRAINED.
+2026-02-17 22:20:56,896 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: mbtcp.unit_id,   [33mW_Name: mbtcp.unit_id,   [34mLayer: mbtcp,   [35mD_Name: Unit Identifier: 0,   [36mPos: 60 (+6),   [31mSize: 1,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,898 - [INFO] - icsd_surro -     [*] Field mbtcp.unit_id valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,898 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.func_code,   [33mW_Name: modbus.func_code,   [34mLayer: modbus,   [35mD_Name: .001 0000 = Function Code: Write Multiple Registers (16),   [36mPos: 61 (+7),   [31mSize: 1,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,900 - [WARNING] - pymodbus.l - Unable to decode frame Modbus Error: Unknown response 103
+2026-02-17 22:20:56,900 - [INFO] - icsd_surro -     [*] Field modbus.func_code valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,901 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.reference_num,   [33mW_Name: modbus.reference_num,   [34mLayer: modbus,   [35mD_Name: Reference Number: 0,   [36mPos: 62 (+8),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,903 - [INFO] - icsd_surro -     [*] Field modbus.reference_num valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,903 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.word_cnt,   [33mW_Name: modbus.word_cnt,   [34mLayer: modbus,   [35mD_Name: Word Count: 2,   [36mPos: 64 (+10),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,906 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36b320>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,914 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,917 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e7bea20>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,921 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,924 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e7865d0>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,928 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,931 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e7be9c0>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,936 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,938 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36b680>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,943 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,946 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36af90>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,951 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,954 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36b2f0>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,958 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,961 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36b8f0>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,965 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,968 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e36bf20>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,972 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,975 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e7be8d0>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,980 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,983 - [ERROR] - asyncio - Fatal error: protocol.data_received() call failed.
+protocol: <pymodbus.server.requesthandler.ServerRequestHandler object at 0x10e784800>
+transport: <_SelectorSocketTransport fd=20 read=polling write=<idle, bufsize=0>>
+Traceback (most recent call last):
+  File "/Users/cv43/.local/share/uv/python/cpython-3.12.12-macos-aarch64-none/lib/python3.12/asyncio/selector_events.py", line 1027, in _read_ready__data_received
+    self._protocol.data_received(data)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 311, in data_received
+    self.datagram_received(data, None)
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transport/transport.py", line 346, in datagram_received
+    cut = self.callback_data(self.recv_buffer, addr=addr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 63, in callback_data
+    used_len = super().callback_data(data, addr)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/transaction/transaction.py", line 229, in callback_data
+    used_len, pdu = self.framer.handleFrame(self.trace_packet(False, data), self.request_dev_id, self.request_transaction_id)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/framer/base.py", line 87, in handleFrame
+    if (pdu := self.decoder.decode(frame_data)) is None:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/decoders.py", line 71, in decode
+    pdu.decode(frame[1:])
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/register_message.py", line 257, in decode
+    self.registers.append(struct.unpack(">H", data[idx : idx + 2])[0])
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 2 bytes
+2026-02-17 22:20:56,987 - [INFO] - icsd_surro - Connecting to mbtcp server at localhost:5020
+2026-02-17 22:20:56,988 - [INFO] - icsd_surro -     [!] Field modbus.word_cnt has a large invalid category, marking as CONSTRAINED.
+2026-02-17 22:20:56,988 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.byte_cnt,   [33mW_Name: modbus.byte_cnt,   [34mLayer: modbus,   [35mD_Name: Byte Count: 4,   [36mPos: 66 (+12),   [31mSize: 1,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,990 - [INFO] - icsd_surro -     [*] Field modbus.byte_cnt valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,990 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.regval_uint16,   [33mW_Name: modbus.regval_uint16,   [34mLayer: modbus,   [35mD_Name: Register Value (UINT16): 65535,   [36mPos: 67 (+13),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,993 - [INFO] - icsd_surro -     [*] Field modbus.regval_uint16 valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,993 - [INFO] - icsd_surro - [MUTATION] Field:   [32mRawField: modbus.regval_uint16,   [33mW_Name: modbus.regval_uint16,   [34mLayer: modbus,   [35mD_Name: Register Value (UINT16): 65535,   [36mPos: 69 (+15),   [31mSize: 2,   [37mBehavior: UNKNOWN,   [32mAccepted: False[0m
+2026-02-17 22:20:56,996 - [INFO] - icsd_surro -     [*] Field modbus.regval_uint16 valid values count: 1, largest invalid category size: 0
+2026-02-17 22:20:56,997 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x9f 0x9 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0x90 0x2
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xdd 0x8c 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x3 0x5b 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x3a 0xad 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x10 0x98 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xe5 0x2b 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xda 0x40 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x56 0x15 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xe9 0x36 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xcb 0xea 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0xbc 0x9 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x2e 0x4 0x4 0xff 0xff 0xff 0xff extra data: 
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x0 0x2 0x71 0xff 0xff 0xff 0xff extra data: 
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x6 0x0 0x10 0x0 0x0 0x0 0x2
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x0 0x2 0x4 0x8a 0x2e 0xff 0xff extra data: 
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x6 0x0 0x10 0x0 0x0 0x0 0x2
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0x10 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0x6f 0x54 extra data: 
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x6 0x0 0x10 0x0 0x0 0x0 0x2
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,997 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,998 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,998 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,998 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,999 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,999 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,999 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:56,999 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,000 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,000 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,000 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,001 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,001 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,001 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,001 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,002 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,002 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,002 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,002 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,003 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,003 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,003 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,003 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,004 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,004 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,004 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,004 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,005 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,005 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,005 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,006 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,006 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,006 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,006 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,007 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,007 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,007 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,008 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,008 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,008 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,009 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,009 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,009 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,009 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,010 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,010 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,010 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,010 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,011 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,011 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,011 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,011 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,012 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,012 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,012 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,012 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,013 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,013 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,013 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,013 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,014 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,014 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,014 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,015 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,015 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,015 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,015 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,016 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,016 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,016 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,016 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,017 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,017 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,017 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,017 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,018 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,018 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,018 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,018 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,019 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,019 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,019 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,019 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,020 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,020 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,020 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,020 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,021 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,021 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,021 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,021 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,022 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,022 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,022 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,022 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,023 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,023 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,023 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,023 - [ERROR] - pymodbus.l - Datastore unable to fulfill request: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse; Traceback (most recent call last):
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/server/requesthandler.py", line 90, in handle_request
+    response = await self.last_pdu.datastore_update(self.server.context, self.last_pdu.dev_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/cv43/nyuad/moma/icsd-surrogate/.venv/lib/python3.12/site-packages/pymodbus/pdu/pdu.py", line 96, in datastore_update
+    raise NotImplementedException(
+pymodbus.exceptions.NotImplementedException: Modbus Error: [Not Implemented] update datastore called wrongly ExceptionResponse
+
+>>>>> send: 0x0 0x54 0x0 0x0 0x0 0x3 0x0 0xff 0x4
+>>>>> recv: 0x0 0x54 0x0 0x0 0x0 0xb 0x0 0xff 0x0 0x0 0x0 0x2 0x4 0xff 0xff 0xff 0xff extra data: 
+2026-02-17 22:20:57,024 - [INFO] - icsd_surro - Clustering responses for seed: 00540000000b00100000000204ffffffff with 129 unique responses...

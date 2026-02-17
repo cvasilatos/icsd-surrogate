@@ -16,7 +16,6 @@ from pygments.unistring import No
 if TYPE_CHECKING:
     from types import ModuleType
 
-from protocol_validator.async_packet_validator import AsyncPacketValidator
 from protocol_validator.protocol_info import ProtocolInfo
 from protocol_validator.validator_base import ValidatorBase
 from rich.console import Console
@@ -34,12 +33,11 @@ class ProtocolFuzzer:
 
         self.logger.debug(f"[+] Initializing Protocol Fuzzer for protocol: {protocol_name}")
 
-        self._protocol_info = ProtocolInfo.from_name(protocol_name)
+        self._protocol_info: ProtocolInfo = ProtocolInfo.from_name(protocol_name)
         self._validator = ValidatorBase(self._protocol_info.protocol_name)
-        self._validator2 = AsyncPacketValidator(protocol_name)
 
     def start_server(self) -> None:
-        module: ModuleType = importlib.import_module(f"server.{self._protocol_info.name.lower()}.server")
+        module: ModuleType = importlib.import_module(f"protocol_server.{self._protocol_info.name.lower()}.server")
         server_class = getattr(module, f"{self._protocol_info.name.capitalize()}Server")
         server = server_class(ip="localhost", port=self._protocol_info.custom_port)
         server_thread = threading.Thread(target=server.start, name=f"{self._protocol_info.name.capitalize()}Server", daemon=True)
@@ -187,8 +185,7 @@ class ProtocolFuzzer:
         # Replace the length field in the packet
         start_pos = len_field.relative_pos + 1
         end_pos = start_pos + len_field.size + 1
-        fixed_packet = packet_bytes[:start_pos] + b"\x00" + length_bytes + packet_bytes[end_pos:]
-        return fixed_packet
+        return packet_bytes[:start_pos] + b"\x00" + length_bytes + packet_bytes[end_pos:]
 
     def _print_plan(self, fuzzing_plan: list[RawField]) -> None:
         table = Table(title="Final Fuzzing Plan", show_header=True, header_style="bold magenta")
@@ -208,11 +205,13 @@ class ProtocolFuzzer:
             )
         Console().print(table)
 
-    def run(self, pcap_path: str, seed: str) -> None:
-        self.start_server()
-        requests = self.load_requests(pcap_path, seed)
-        for req in requests:
-            self.analyze_and_fuzz(req)
+
+def run(pcap_path: str, seed: str, protocol: str) -> None:
+    fuzzer = ProtocolFuzzer(protocol)
+    fuzzer.start_server()
+    requests: list[str] = fuzzer.load_requests(pcap_path, seed)
+    for req in requests:
+        fuzzer.analyze_and_fuzz(req)
 
 
 if __name__ == "__main__":
@@ -227,7 +226,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     CustomLogger.setup_logging("logs", "app_wide_log", level=args.log_level)
-    logging.getLogger("asyncio").setLevel(logging.CRITICAL)
 
-    fuzzer = ProtocolFuzzer(args.protocol)
-    fuzzer.run(pcap_path=args.pcap, seed=args.seed)
+    run(args.pcap, args.seed, args.protocol)

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from pyshark.packet.layers.base import BaseLayer
 
 import logging
 import socket
@@ -30,9 +31,9 @@ class ProtocolExplorer:
         self.logger.info(f"[+] Connected to {self._protocol_info.name} server on port {self._protocol_info.custom_port}")
 
     def dissect(self) -> None:
-        packet: Packet = self._validator.validate(self._seed, is_request=True)
+        packet: BaseLayer = self._validator.validate(self._seed, is_request=True)
         self._sock.send(bytes.fromhex(self._seed))
-        response = self._sock.recv(1024)
+        response: bytes = self._sock.recv(1024)
         if len(response) > 0 and response.hex()[0:2] != "0000":
             self.logger.info(f"[+] Dissecting packet: {self._seed} : {response.hex()} for protocol layers: {self._protocol_info.scapy_names}")
         else:

@@ -12,16 +12,17 @@ packages = ["src/icsd_surrogate"]
 name = "icsd_surrogate"
 version = "0.1.0"
 description = "The ICSClone progression"
-requires-python = ">=3.14"
+requires-python = ">=3.12"
 dependencies = [
     "ruff",
     "mypy",
     "pyright",
     "readmeai",
     "pre-commit",
-    "protocol-validator",
     "rich>=14.3.2",
     "plotly>=6.5.2",
+    "protocol-validator",
+    "protocol-server",
 ]
 
 [tool.uv]
@@ -29,10 +30,11 @@ managed = true
 
 [tool.uv.sources]
 protocol-validator = { path = "../../../projects/protocol-validator/dist/protocol_validator-0.1.0-py3-none-any.whl" }
+protocol-server = { path = "../../../projects/protocol-server/dist/protocol_server-0.1.0-py3-none-any.whl" }
 
 [tool.ruff]
 line-length = 180
-target-version = "py314"
+target-version = "py312"
 exclude = [".git", ".mypy_cache", ".ruff_cache", "node_modules", "venv", ".venv"]
 
 [tool.ruff.lint]
@@ -71,7 +73,7 @@ indent-style = "space"
 
 [tool.ty.environment]
 python = "./.venv/bin/python"
-python-version = "3.14"
+python-version = "3.12"
 root = ["src"]
 
 [tool.ty.rules]
