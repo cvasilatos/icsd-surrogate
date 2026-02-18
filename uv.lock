@@ -1046,6 +1046,7 @@ name = "proteus"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "click" },
     { name = "cursusd" },
     { name = "decimalog" },
     { name = "mypy" },
@@ -1061,6 +1062,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "click", specifier = ">=8.3.1" },
     { name = "cursusd", git = "https://github.com/cvasilatos/cursusd.git" },
     { name = "decimalog", git = "https://github.com/cvasilatos/decimalog.git" },
     { name = "mypy" },

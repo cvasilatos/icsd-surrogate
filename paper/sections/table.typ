@@ -1,0 +1,17 @@
+#let comparison-table = table(
+  columns: (auto, auto, auto, auto),
+  inset: 5pt,
+  align: horizon,
+  table.header([*Metric*], [*Type*], [*Baseline*], [*Ours*]),
+  [FC entropy], [Req], [2.1787], [*2.2734*],
+  [Address Skewness], [Both], [0.3419], [*0.0577*],
+  [Address Coverage], [Both], [300], [*63726*],
+  table.cell(rowspan: 2)[Byte entropy], [Req], [4.0017], [*7.8807*],
+  [Resp], [3.8356], [*5.7647*],
+  table.cell(rowspan: 2)[Bigram entropy], [Req], [6.7598], [*15.0316*],
+  [Resp], [6.4115], [*9.6484*],
+  table.cell(rowspan: 2)[4-gram entropy], [Req], [8.8889], [*16.6470*],
+  [Resp], [7.9201], [*10.7034*],
+  table.cell(rowspan: 2)[Avg length], [Req], [14.05 $plus.minus$ 2.99], [89.23 $plus.minus$ 71.88],
+  [Resp], [10.20 $plus.minus$ 1.55], [30.68 $plus.minus$ 54.30],
+)

@@ -1,0 +1,6 @@
+Category,Item,Stock,Price,Warehouse
+Electronics,Laptop,15,1200,North
+Electronics,Monitor,30,350,North
+Office,Desk Chair,45,150,South
+Office,Desk Lamp,120,45,South
+Supplies,Paper (Ream),500,5,East

@@ -1,6 +1,5 @@
 """ProteusD: A Protocol Fuzzer for ICS Protocols."""
 
-import argparse
 import json
 import logging
 import secrets
@@ -10,6 +9,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import cast
 
+import click
 from cursusd.starter import Starter
 from decimalog.logger import CustomLogger
 from praetor.praetord import ValidatorBase
@@ -17,6 +17,7 @@ from praetor.protocol_info import ProtocolInfo
 
 from proteus.analyzers.dynamic_field_analyzer import DynamicFieldAnalyzer
 from proteus.analyzers.protocol_explorer import ProtocolExplorer
+from proteus.model.cli_branding import CliBranding
 from proteus.model.raw_field import EnhancedJSONEncoder, FieldBehavior, RawField
 from proteus.results.packet_struct import PacketStruct
 
@@ -197,27 +198,28 @@ class ProtocolFuzzer:
         return packet_bytes[:start_pos] + b"\x00" + length_bytes + packet_bytes[end_pos:]
 
 
-def run(pcap_path: str, packet: str, protocol: str) -> None:
+@click.command()
+@click.option("--protocol", required=True, help="Protocol to use (e.g., mbtcp, s7comm, dnp3)")
+@click.option("--log-level", default="INFO", show_default=True, help="Logging level")
+@click.option("--seed", required=False, help="Hex string of the seed packet")
+@click.option("--pcap", required=False, help="Path to pcap file containing the seed packet")
+def run(protocol: str, log_level: str, seed: str | None, pcap: str | None) -> None:
     """Run the Protocol Fuzzer with the specified parameters, including loading seed packets, analyzing them, and applying fuzzing strategies."""
+    if bool(seed) == bool(pcap):
+        raise click.UsageError("Provide exactly one of --seed or --pcap.")
+
+    CustomLogger.setup_logging("logs", "app", level=log_level)
+
+    cli_branding = CliBranding()
+    cli_branding.show_intro()
+
     fuzzer = ProtocolFuzzer(protocol)
     server_starter = Starter(protocol, 5020, delay=3)
     server_starter.start_server()
-    requests: list[str] = fuzzer.load_requests(pcap_path, packet)
+    requests: list[str] = fuzzer.load_requests(pcap or "", seed or "")
     for req in requests:
         fuzzer.analyze_and_fuzz(req)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run Protocol Learner")
-    parser.add_argument("--protocol", type=str, help="Protocol to use (e.g., mbtcp, s7comm, dnp3)")
-    parser.add_argument("--log-level", type=str, default="INFO", help="Logging level")
-
-    group: argparse._MutuallyExclusiveGroup = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--seed", type=str, help="Hex string of the seed packet")
-    group.add_argument("--pcap", type=str, help="Path to pcap file containing the seed packet")
-
-    args: argparse.Namespace = parser.parse_args()
-
-    CustomLogger.setup_logging("logs", "app", level=args.log_level)
-
-    run(args.pcap, args.seed, args.protocol)
+    run()

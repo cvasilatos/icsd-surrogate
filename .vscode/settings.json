@@ -9,6 +9,10 @@
   "ty.diagnosticMode": "workspace",
   "ruff.nativeServer": "on",
   "ruff.enable": true,
+  "[typst]": {
+    "editor.formatOnSave": true,
+  },
+  "tinymist.rootPath": "${workspaceFolder}",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
@@ -34,12 +38,12 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
   },
   "[toml]": {
-        "editor.defaultFormatter": "tamasfe.even-better-toml",
-        "editor.suggestSelection": "first",
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": false,
-            "strings": true
-        }
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
+    "editor.suggestSelection": "first",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
     }
+  }
 }

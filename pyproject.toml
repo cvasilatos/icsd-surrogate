@@ -25,6 +25,7 @@ dependencies = [
     "decimalog",
     "praetor",
     "cursusd",
+    "click>=8.3.1",
 ]
 
 [tool.uv]

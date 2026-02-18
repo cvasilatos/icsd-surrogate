@@ -1,0 +1,5 @@
+#let project = json("../resources/metadata.json")
+
+Industrial control systems (ICS) rely on specialized network protocols to coordinate safety and mission critical physical processes through the usage of programmable logic controllers (PLCs). Advancing testing, integration, security analysis, and training requires faithful emulation of protocol behavior; however, progress is constrained by scarce access to hardware and the lack of standardized, machine learning (ML) ready corpora that provide clean request–response (R/R) pairs for supervised generative modeling. We present #project.name, a  novel fuzzing based methodology to automatically generate ICS protocol datasets suitable for generative modeling. We deliver datasets for representative ICS protocols (Modbus/TCP, S7comm, and DNP3) explicitly designed for response synthesis.
+
+#project.name enables fair comparisons, encourages rigorous methodology, and lowers the barrier to building protocol emulators for testing, interoperability validation, honeypot development, and training settings where physical devices are unavailable.
