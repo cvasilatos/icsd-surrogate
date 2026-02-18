@@ -3,7 +3,6 @@
 import json
 import logging
 import secrets
-import struct
 from dataclasses import asdict
 from pathlib import Path
 from typing import cast
@@ -23,11 +22,11 @@ from proteus.utils.constants import (
     DEFAULT_HOST,
     DEFAULT_PORT,
     MODBUS_FUNCTION_CODE_FIELD,
-    PACKET_LENGTH_OFFSET,
     STRUCTURAL_VARIANT_FUNCTION_CODES,
     STRUCTURAL_VARIANT_PAYLOAD_LENGTHS,
     VALIDATION_TIMEOUT,
 )
+from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
 
@@ -92,15 +91,16 @@ class ProtocolFuzzer:
         self.logger.info(f"[+] Saved raw fields to outputs/{self._protocol_info.name}_raw_fields.json")
 
     def _construct_prefix(self, fields: list[RawField], stop_at_name: str) -> bytes:
-        prefix = b""
-        for field in fields:
-            if field.name == stop_at_name:
-                break
-
-            field_bytes: bytes = bytes.fromhex(field.val)
-            prefix += field_bytes
-
-        return prefix
+        """Construct packet bytes from fields up to a specific field.
+        
+        Args:
+            fields: List of raw fields
+            stop_at_name: Name of the field to stop at (not included)
+            
+        Returns:
+            Packet bytes constructed from fields
+        """
+        return PacketManipulator.construct_prefix(fields, stop_at_name)
 
     def _find_structural_variants(self, fields_json: list[RawField]) -> list[str]:
         """Find structural variants by testing different function codes and payload lengths.
@@ -183,7 +183,7 @@ class ProtocolFuzzer:
 
                 # Fix length fields to match current packet size
                 for len_field in length_fields:
-                    candidate_pkt = self._fix_length_field(candidate_pkt, len_field)
+                    candidate_pkt = PacketManipulator.fix_length_field(candidate_pkt, len_field)
                     
                 try:
                     self._validate_seed(DEFAULT_HOST, DEFAULT_PORT, candidate_pkt)
@@ -244,22 +244,6 @@ class ProtocolFuzzer:
             "len": len(response),
             "data": response.hex(),
         }
-
-    def _fix_length_field(self, packet_bytes: bytes, len_field: RawField) -> bytes:
-        """Fix length field in packet to match actual packet size.
-        
-        Args:
-            packet_bytes: The packet bytes
-            len_field: The length field to fix
-            
-        Returns:
-            Updated packet bytes with correct length field
-        """
-        length_value = len(packet_bytes) - PACKET_LENGTH_OFFSET
-        length_bytes = struct.pack(">H", length_value)
-        start_pos = len_field.relative_pos + 1
-        end_pos = start_pos + len_field.size + 1
-        return packet_bytes[:start_pos] + b"\x00" + length_bytes + packet_bytes[end_pos:]
 
 
 @click.command()

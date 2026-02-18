@@ -15,6 +15,7 @@ from praetor.protocol_info import ProtocolInfo
 
 from proteus.model.raw_field import FieldBehavior, RawField
 from proteus.utils.constants import CONSTRAINED_THRESHOLD, DEFAULT_MUTATION_SAMPLE_SIZE, FUZZABLE_THRESHOLD, MODBUS_FUNCTION_CODE_FIELD
+from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
 
@@ -169,7 +170,9 @@ class DynamicFieldAnalyzer:
                 self.logger.debug(f"    [*] Field: {f.name}, testing mutation value: {mutation_hex}, original: {seed[f.relative_pos * 2 : (f.relative_pos + f.size) * 2]}")
                 
                 try:
-                    mutated_hex: str = self._inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields).hex()
+                    mutated_hex: str = PacketManipulator.inject_mutation(
+                        f, seed, mutation_hex, unique_fields=unique_fields
+                    ).hex()
                     self._validator.validate(mutated_hex, is_request=True)
                     self._socket_manager.send(bytes.fromhex(mutated_hex))
                     self._requests.append(mutated_hex)
@@ -216,57 +219,11 @@ class DynamicFieldAnalyzer:
             if f.name == MODBUS_FUNCTION_CODE_FIELD:
                 for _ in range(100):
                     new_hex = "ff"
-                    mutated_hex = self._inject_mutation(f, seed, new_hex, unique_fields=unique_fields).hex()
+                    mutated_hex = PacketManipulator.inject_mutation(
+                        f, seed, new_hex, unique_fields=unique_fields
+                    ).hex()
                     self._socket_manager.send(bytes.fromhex(mutated_hex))
                     response = self._socket_manager.receive(1024)
                     self.logger.info(f"Testing func_code mutation: {mutated_hex}, Response: {response.hex()}")
                     self._responses.append(response.hex())
 
-    def _inject_mutation(self, target_field: RawField, base_payload_bytes: str, mutation_hex: str, unique_fields: list[RawField]) -> bytearray:
-        self.logger.trace(f"Injecting mutation {mutation_hex} into field {target_field.name}")
-        payload_copy = bytearray(bytes.fromhex(base_payload_bytes))
-
-        start_index = target_field.relative_pos
-        end_index = start_index + target_field.size
-
-        payload_copy[start_index:end_index] = bytes.fromhex(mutation_hex)
-
-        prev = 0
-        for crc in unique_fields:
-            if ".len" in crc.name.lower() and target_field.name != crc.name:
-                total_bytes = len(base_payload_bytes) // 2
-                payload_len = total_bytes - 6
-                start_crc = crc.relative_pos
-                end_crc = start_crc + crc.size
-                orig = payload_copy[start_crc:end_crc]
-                payload_copy = payload_copy[:start_crc] + payload_len.to_bytes(crc.size, byteorder="big") + payload_copy[end_crc:]
-                self.logger.trace(
-                    f"    [*] Recalculating Length field: {crc.name} at pos {crc.relative_pos} size {crc.size}, prev: {orig.hex()},"
-                    f"calculated: {payload_len.to_bytes(crc.size, byteorder='little').hex()}"
-                )
-
-            if "crc" in crc.name.lower() and target_field.name != crc.name:
-                self.logger.trace(f"    [*] Recalculating CRC field: {crc.name} at pos {crc.relative_pos} size {crc.size}")
-                start_crc = crc.relative_pos
-                end_crc = start_crc + crc.size
-                crc_value = _dnp3_crc_simple(payload_copy[prev:start_crc])
-                prev = end_crc
-                self.logger.trace(f"New crc start: {start_crc} end: {end_crc} value: {crc_value:#04x}")
-                payload_copy = payload_copy[:start_crc] + crc_value.to_bytes(crc.size, byteorder="little") + payload_copy[end_crc:]
-
-        return payload_copy
-
-
-def _dnp3_crc_simple(data_part: bytearray) -> int:
-    crc = 0x0000
-    polynomial = 0xA6BC
-
-    for byte in data_part:
-        crc ^= byte
-        for _ in range(8):
-            if crc & 1:
-                crc = (crc >> 1) ^ polynomial
-            else:
-                crc >>= 1
-
-    return (~crc) & 0xFFFF
