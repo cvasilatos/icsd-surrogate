@@ -3,7 +3,7 @@ import logging
 import secrets
 from dataclasses import asdict
 from pathlib import Path
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 import click
 from cursusd.starter import Starter
@@ -25,6 +25,9 @@ from proteus.utils.constants import (
 from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
+
+if TYPE_CHECKING:
+    from proteus.protocols.base import ProtocolAdapter
 
 
 class ProtocolFuzzer:
@@ -56,9 +59,12 @@ class ProtocolFuzzer:
 
         self.logger.debug(f"[+] Initializing Protocol Fuzzer for protocol: {protocol}")
 
+        server_starter = Starter(protocol, DEFAULT_PORT, delay=3)
+        server_starter.start_server()
+
         self._protocol_info: ProtocolInfo = ProtocolInfo.from_name(protocol)
         self._validator = ValidatorBase(protocol)
-        self._adapter = ProtocolAdapterRegistry.get(protocol)
+        self._adapter: ProtocolAdapter = ProtocolAdapterRegistry.get(protocol)
 
         self._packet_struct_viewer = PacketStruct()
 
@@ -66,21 +72,6 @@ class ProtocolFuzzer:
         self._explorer.dissect()
         self._analyzer = DynamicFieldAnalyzer(self._protocol_info.protocol_name)
         self._analyzer.analyze(seed, self._explorer.raw_fields)
-
-    def load_requests(self, pcap_path: str, packet: str) -> list[str]:
-        """Load seed packets from a specified pcap file or use a provided hex string as the seed packet.
-
-        This method checks if a pcap path is provided, and if so, it reads the requests from the file. If not,
-        it uses the provided hex string as the single seed packet for analysis and fuzzing.
-        """
-        if pcap_path:
-            requests: list[str] = []
-            with Path(pcap_path).open(encoding="utf-8") as f:
-                requests.extend([line.split(",")[0].strip() for line in f])
-            self.logger.info(f"[+] Loaded {len(requests)} requests from CSV file: {pcap_path}")
-            return requests
-
-        return [packet.replace(" ", "")]
 
     def analyze_and_fuzz(self, seed: str) -> None:
         """Analyze the provided seed packet to extract protocol fields and their behaviors, then apply fuzzing strategies based on the analysis results.
@@ -192,9 +183,6 @@ def run(protocol: str, seed: str, log_level: str) -> None:
     cli_branding.show_intro()
 
     fuzzer = ProtocolFuzzer(protocol, seed)
-
-    server_starter = Starter(protocol, DEFAULT_PORT, delay=3)
-    server_starter.start_server()
 
     fuzzer.analyze_and_fuzz(seed)
 

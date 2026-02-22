@@ -1153,18 +1153,15 @@ dependencies = [
     { name = "decimalog" },
     { name = "plotly" },
     { name = "praetor" },
-    { name = "pre-commit" },
-    { name = "pyright" },
-    { name = "readmeai" },
     { name = "rich" },
-    { name = "ruff" },
-    { name = "ty" },
 ]
 
 [package.dev-dependencies]
 dev = [
+    { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-cov" },
+    { name = "ty" },
 ]
 
 [package.metadata]
@@ -1174,18 +1171,15 @@ requires-dist = [
     { name = "decimalog", git = "https://github.com/cvasilatos/decimalog.git" },
     { name = "plotly", specifier = ">=6.5.2" },
     { name = "praetor", git = "https://github.com/cvasilatos/praetor.git" },
-    { name = "pre-commit" },
-    { name = "pyright" },
-    { name = "readmeai" },
     { name = "rich", specifier = ">=14.3.2" },
-    { name = "ruff" },
-    { name = "ty", specifier = ">=0.0.17" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "pre-commit", specifier = ">=4.5.1" },
     { name = "pytest", specifier = ">=9.0.2" },
     { name = "pytest-cov", specifier = ">=7.0.0" },
+    { name = "ty", specifier = ">=0.0.17" },
 ]
 
 [[package]]

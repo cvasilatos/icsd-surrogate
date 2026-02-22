@@ -8,7 +8,7 @@
         "size": 2,
         "val": "0054",
         "valid_values": [
-            "078f"
+            "13a6"
         ],
         "invalid_values": {},
         "layer": "mbtcp",
@@ -26,17 +26,17 @@
         "valid_values": [],
         "invalid_values": {
             "Validation failed, Error: Invalid protocol ID (Group: None, Severity: None)": [
-                "5837",
-                "8366",
-                "ef5d",
-                "92d8",
-                "6fb5",
-                "4825",
-                "dd88",
-                "bc15",
-                "0fac",
-                "70d1",
-                "16cf"
+                "b226",
+                "6b10",
+                "bafc",
+                "0cba",
+                "ef71",
+                "4de4",
+                "7397",
+                "56c0",
+                "d97d",
+                "e7ed",
+                "b38f"
             ]
         },
         "layer": "mbtcp",
@@ -54,17 +54,17 @@
         "valid_values": [],
         "invalid_values": {
             "Validation failed, no layer '['mbtcp', 'modbus']'": [
-                "2a76",
-                "b643",
-                "4de8",
-                "35b9",
-                "0ec7",
-                "e7e3",
-                "53bd",
-                "a31c",
-                "ff0e",
-                "16d4",
-                "eca4"
+                "5486",
+                "a149",
+                "4c7f",
+                "eadf",
+                "d94d",
+                "dc90",
+                "a64c",
+                "247e",
+                "662f",
+                "7938",
+                "f1f2"
             ]
         },
         "layer": "mbtcp",
@@ -80,7 +80,7 @@
         "size": 1,
         "val": "00",
         "valid_values": [
-            "e1"
+            "0c"
         ],
         "invalid_values": {},
         "layer": "mbtcp",
@@ -96,7 +96,7 @@
         "size": 1,
         "val": "10",
         "valid_values": [
-            "99"
+            "be"
         ],
         "invalid_values": {},
         "layer": "modbus",
@@ -112,7 +112,7 @@
         "size": 2,
         "val": "0000",
         "valid_values": [
-            "6a5a"
+            "09b4"
         ],
         "invalid_values": {},
         "layer": "modbus",
@@ -130,17 +130,17 @@
         "valid_values": [],
         "invalid_values": {
             "[Errno 32] Broken pipe": [
-                "89c4",
-                "4706",
-                "e16c",
-                "517e",
-                "df33",
-                "9124",
-                "df87",
-                "a449",
-                "9413",
-                "a7ad",
-                "39fd"
+                "2d15",
+                "8b54",
+                "3ac2",
+                "1bcc",
+                "fb69",
+                "37c2",
+                "bf93",
+                "6db9",
+                "10e3",
+                "67f2",
+                "d7ac"
             ]
         },
         "layer": "modbus",
@@ -156,7 +156,7 @@
         "size": 1,
         "val": "04",
         "valid_values": [
-            "9d"
+            "bc"
         ],
         "invalid_values": {},
         "layer": "modbus",
@@ -172,7 +172,7 @@
         "size": 2,
         "val": "ffff",
         "valid_values": [
-            "c40e"
+            "c9ea"
         ],
         "invalid_values": {},
         "layer": "modbus",
@@ -188,7 +188,7 @@
         "size": 2,
         "val": "ffff",
         "valid_values": [
-            "1965"
+            "f08e"
         ],
         "invalid_values": {},
         "layer": "modbus",

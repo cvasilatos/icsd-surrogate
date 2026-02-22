@@ -14,13 +14,8 @@ version = "0.1.0"
 description = "The ICSClone progression"
 requires-python = ">=3.12"
 dependencies = [
-    "ruff",
-    "pyright",
-    "readmeai",
-    "pre-commit",
     "rich>=14.3.2",
     "plotly>=6.5.2",
-    "ty>=0.0.17",
     "decimalog",
     "praetor",
     "cursusd",
@@ -29,8 +24,10 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pre-commit>=4.5.1",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
+    "ty>=0.0.17",
 ]
 
 [tool.uv]
