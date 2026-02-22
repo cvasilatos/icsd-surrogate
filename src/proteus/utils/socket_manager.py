@@ -6,7 +6,8 @@ connection, reconnection, and cleanup operations.
 
 import logging
 import socket
-from typing import TYPE_CHECKING, cast
+import types
+from typing import TYPE_CHECKING, Self, cast
 
 if TYPE_CHECKING:
     from decimalog.logger import CustomLogger
@@ -22,6 +23,7 @@ class SocketManager:
             host: Target host address
             port: Target port number
             timeout: Socket timeout in seconds
+
         """
         self.logger: CustomLogger = cast("CustomLogger", logging.getLogger(f"{self.__class__.__module__}.{self.__class__.__name__}"))
         self._host = host
@@ -50,6 +52,7 @@ class SocketManager:
 
         Raises:
             RuntimeError: If socket is not connected
+
         """
         if self._sock is None:
             raise RuntimeError("Socket not connected. Call connect() first.")
@@ -66,6 +69,7 @@ class SocketManager:
 
         Raises:
             RuntimeError: If socket is not connected
+
         """
         if self._sock is None:
             raise RuntimeError("Socket not connected. Call connect() first.")
@@ -78,16 +82,11 @@ class SocketManager:
             self._sock = None
             self.logger.debug(f"Closed connection to {self._host}:{self._port}")
 
-    def __enter__(self) -> "SocketManager":
+    def __enter__(self) -> Self:
         """Context manager entry."""
         self.connect()
         return self
 
-    def __exit__(
-        self,
-        exc_type: type[BaseException] | None,
-        exc_val: BaseException | None,
-        exc_tb: object | None,
-    ) -> None:
+    def __exit__(self, exc_type: type[BaseException] | None, exc_val: BaseException | None, exc_tb: types.TracebackType | None) -> None:
         """Context manager exit."""
         self.close()

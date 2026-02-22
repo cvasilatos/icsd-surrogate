@@ -17,11 +17,7 @@ from proteus.model.cli_branding import CliBranding
 from proteus.model.raw_field import EnhancedJSONEncoder, FieldBehavior, RawField
 from proteus.protocols.registry import ProtocolAdapterRegistry
 from proteus.results.packet_struct import PacketStruct
-from proteus.utils.constants import (
-    DEFAULT_HOST,
-    DEFAULT_PORT,
-    VALIDATION_TIMEOUT,
-)
+from proteus.utils.constants import DEFAULT_HOST, DEFAULT_PORT, VALIDATION_TIMEOUT
 from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
@@ -70,6 +66,7 @@ class ProtocolFuzzer:
 
         self._explorer = ProtocolExplorer(seed, self._protocol_info.name)
         self._explorer.dissect()
+
         self._analyzer = DynamicFieldAnalyzer(self._protocol_info.protocol_name)
         self._analyzer.analyze(seed, self._explorer.raw_fields)
 
@@ -107,12 +104,7 @@ class ProtocolFuzzer:
     def _identify_length_fields(self, fields: list[RawField], pivot_field: RawField) -> list[RawField]:
         return [f for f in fields if f.behavior == FieldBehavior.CONSTRAINED and f.relative_pos < pivot_field.relative_pos]
 
-    def _generate_variant_candidates(
-        self,
-        fields: list[RawField],
-        pivot_field: RawField,
-        length_fields: list[RawField],
-    ) -> list[str]:
+    def _generate_variant_candidates(self, fields: list[RawField], pivot_field: RawField, length_fields: list[RawField]) -> list[str]:
         new_seeds: list[str] = []
 
         for val in self._adapter.structural_function_codes:
@@ -163,12 +155,7 @@ class ProtocolFuzzer:
             self.logger.debug(f"Sent: {seed_bytes.hex()} | Received: {response.hex()}")
             self._validator.validate(seed_bytes.hex(), is_request=True)
 
-        return {
-            "status": "RESPONSE_RECEIVED",
-            "valid": True,
-            "len": len(response),
-            "data": response.hex(),
-        }
+        return {"status": "RESPONSE_RECEIVED", "valid": True, "len": len(response), "data": response.hex()}
 
 
 @click.command()
