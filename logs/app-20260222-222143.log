@@ -1,0 +1,7 @@
+2026-02-22 22:21:43,359 - [INFO] - [1m.mbtcp.server.MbtcpServer[0m - Starting Modbus TCP server at localhost:5020
+2026-02-22 22:21:43,359 - [INFO] - [1mcursusd.starter.Starter[0m - [+] Started mbtcp server on port 5020
+2026-02-22 22:21:43,361 - [INFO] - [1mpymodbus.logging[0m - Server listening.
+2026-02-22 22:21:46,364 - [INFO] - [1m__main__.ProtocolFuzzer[0m - [+] Analyzing seed packet: 00540000000b00100000000204ffffffff
+2026-02-22 22:21:46,367 - [INFO] - [1mexplorer.ProtocolExplorer[0m - [+] Connected to MBTCP server on port 5020
+2026-02-22 22:21:46,696 - [INFO] - [1mexplorer.ProtocolExplorer[0m - [+] Dissecting packet: 00540000000b00100000000204ffffffff : 005400000006001000000002 for protocol layers: ['mbtcp', 'modbus']
+2026-02-22 22:21:46,696 - [WARNING] - [1mexplorer.ProtocolExplorer[0m -     [!] Skipping..Overlapping field with larger size detected at pos 61, Value: Write Multiple Registers (16)

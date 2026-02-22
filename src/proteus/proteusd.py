@@ -88,7 +88,7 @@ class ProtocolFuzzer:
 
         explorer = ProtocolExplorer(packet, self._protocol_info.name)
         explorer.dissect()
-        analyzer = DynamicFieldAnalyzer(self._protocol_info.name)
+        analyzer = DynamicFieldAnalyzer(self._protocol_info.protocol_name)
         analyzer.analyze(packet, explorer.raw_fields)
 
         analyzer.cluster_responses_plotly(packet)
