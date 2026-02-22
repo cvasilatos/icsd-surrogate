@@ -14,13 +14,16 @@ from praetor.praetord import ValidatorBase
 from praetor.protocol_info import ProtocolInfo
 
 from proteus.model.raw_field import FieldBehavior, RawField
-from proteus.utils.constants import CONSTRAINED_THRESHOLD, DEFAULT_MUTATION_SAMPLE_SIZE, FUZZABLE_THRESHOLD, MODBUS_FUNCTION_CODE_FIELD
+from proteus.protocols.registry import ProtocolAdapterRegistry
+from proteus.utils.constants import CONSTRAINED_THRESHOLD, DEFAULT_MUTATION_SAMPLE_SIZE, FUZZABLE_THRESHOLD
 from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
 
 if TYPE_CHECKING:
     from decimalog.logger import CustomLogger
+
+    from proteus.protocols.base import ProtocolAdapter
 
 
 class DynamicFieldAnalyzer:
@@ -33,6 +36,7 @@ class DynamicFieldAnalyzer:
 
         self._protocol_info: ProtocolInfo = ProtocolInfo.from_name(protocol)
         self._validator = ValidatorBase(protocol)
+        self._adapter: ProtocolAdapter = ProtocolAdapterRegistry.get(protocol)
 
         self._socket_manager = SocketManager("localhost", self._protocol_info.custom_port)
         self._socket_manager.connect()
@@ -170,7 +174,7 @@ class DynamicFieldAnalyzer:
                 self.logger.debug(f"    [*] Field: {f.name}, testing mutation value: {mutation_hex}, original: {seed[f.relative_pos * 2 : (f.relative_pos + f.size) * 2]}")
 
                 try:
-                    mutated_hex: str = PacketManipulator.inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields).hex()
+                    mutated_hex: str = PacketManipulator.inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields, adapter=self._adapter).hex()
                     self._validator.validate(mutated_hex, is_request=True)
                     self._socket_manager.send(bytes.fromhex(mutated_hex))
                     self._requests.append(mutated_hex)
@@ -187,10 +191,8 @@ class DynamicFieldAnalyzer:
                         f.invalid_values[str(e)] = []
                     f.invalid_values[str(e)].append(mutation_hex)
 
-                    # Reconnect on error
                     self._socket_manager.reconnect()
 
-                # Classify field behavior based on valid/invalid response patterns
                 if len(f.valid_values) > FUZZABLE_THRESHOLD:
                     f.set_behavior(FieldBehavior.FUZZABLE)
                     f.accepted = True
@@ -207,19 +209,15 @@ class DynamicFieldAnalyzer:
         self._run_additional_mutations(unique_fields, seed)
 
     def _run_additional_mutations(self, unique_fields: list[RawField], seed: str) -> None:
-        """Run additional protocol-specific mutation tests.
+        """Dispatch protocol-specific additional mutation rounds via the protocol adapter.
 
         Args:
-            unique_fields: List of fields to test
-            seed: Original seed packet hex string
+            unique_fields: The fields extracted from the dissected seed packet.
+            seed: The original seed packet as a hex string.
 
         """
-        for f in unique_fields:
-            if f.name == MODBUS_FUNCTION_CODE_FIELD:
-                for _ in range(100):
-                    new_hex = "ff"
-                    mutated_hex = PacketManipulator.inject_mutation(f, seed, new_hex, unique_fields=unique_fields).hex()
-                    self._socket_manager.send(bytes.fromhex(mutated_hex))
-                    response = self._socket_manager.receive(1024)
-                    self.logger.info(f"Testing func_code mutation: {mutated_hex}, Response: {response.hex()}")
-                    self._responses.append(response.hex())
+        for mutated_hex in self._adapter.get_additional_mutations(unique_fields, seed):
+            self._socket_manager.send(bytes.fromhex(mutated_hex))
+            response = self._socket_manager.receive(1024)
+            self.logger.info(f"Testing additional mutation: {mutated_hex}, Response: {response.hex()}")
+            self._responses.append(response.hex())

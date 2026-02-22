@@ -17,13 +17,11 @@ from proteus.analyzers.dynamic_field_analyzer import DynamicFieldAnalyzer
 from proteus.analyzers.protocol_explorer import ProtocolExplorer
 from proteus.model.cli_branding import CliBranding
 from proteus.model.raw_field import EnhancedJSONEncoder, FieldBehavior, RawField
+from proteus.protocols.registry import ProtocolAdapterRegistry
 from proteus.results.packet_struct import PacketStruct
 from proteus.utils.constants import (
     DEFAULT_HOST,
     DEFAULT_PORT,
-    MODBUS_FUNCTION_CODE_FIELD,
-    STRUCTURAL_VARIANT_FUNCTION_CODES,
-    STRUCTURAL_VARIANT_PAYLOAD_LENGTHS,
     VALIDATION_TIMEOUT,
 )
 from proteus.utils.packet_manipulator import PacketManipulator
@@ -61,6 +59,7 @@ class ProtocolFuzzer:
 
         self._protocol_info: ProtocolInfo = ProtocolInfo.from_name(protocol)
         self._validator = ValidatorBase(protocol)
+        self._adapter = ProtocolAdapterRegistry.get(protocol)
 
         self._packet_struct_viewer = PacketStruct()
 
@@ -118,7 +117,6 @@ class ProtocolFuzzer:
         length_fields = self._identify_length_fields(fields_json, pivot_field)
         new_seeds = self._generate_variant_candidates(fields_json, pivot_field, length_fields)
 
-        # Process new seeds for further analysis (side effects: prints and logs results)
         self._find_structural_variants2(new_seeds, pivot_field)
         return new_seeds
 
@@ -136,7 +134,7 @@ class ProtocolFuzzer:
 
         """
         for field in fields:
-            if MODBUS_FUNCTION_CODE_FIELD in field.name:
+            if self._adapter.pivot_field_name in field.name:
                 print(f"Selected Structural Pivot: {field.name}")
                 return field
         raise ValueError("No suitable pivot field found for structural analysis.")
@@ -173,20 +171,18 @@ class ProtocolFuzzer:
         """
         new_seeds: list[str] = []
 
-        for val in STRUCTURAL_VARIANT_FUNCTION_CODES:
+        for val in self._adapter.structural_function_codes:
             base_packet = PacketManipulator.construct_prefix(fields, stop_at_name=pivot_field.name)
             base_packet += bytes.fromhex(val)
             print(f"Base Packet with new pivot {val}: {base_packet.hex()}")
 
-            for payload_len in STRUCTURAL_VARIANT_PAYLOAD_LENGTHS:
+            for payload_len in self._adapter.structural_payload_lengths:
                 payload = b"\x00" * payload_len
                 candidate_pkt = base_packet + payload
 
-                # Fix length fields to match current packet size
                 for len_field in length_fields:
-                    candidate_pkt = PacketManipulator.fix_length_field(candidate_pkt, len_field)
+                    candidate_pkt = self._adapter.fix_length_field(candidate_pkt, len_field)
 
-                # Validate after all length fields have been fixed
                 try:
                     self._validate_seed(DEFAULT_HOST, DEFAULT_PORT, candidate_pkt)
                     new_seeds.append(candidate_pkt.hex())
