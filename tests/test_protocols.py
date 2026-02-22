@@ -2,9 +2,6 @@
 
 import struct
 
-import pytest
-
-from proteus.model.field_behavior import FieldBehavior
 from proteus.model.raw_field import RawField
 from proteus.protocols.dnp3 import Dnp3Adapter
 from proteus.protocols.modbus import ModbusAdapter
@@ -18,6 +15,7 @@ def _make_field(name: str, relative_pos: int, size: int, val: str = "00") -> Raw
 # ---------------------------------------------------------------------------
 # ModbusAdapter
 # ---------------------------------------------------------------------------
+
 
 class TestModbusAdapterProperties:
     """Tests for ModbusAdapter property accessors."""
@@ -78,7 +76,9 @@ class TestModbusUpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         len_field = _make_field("mbtcp.len", relative_pos=4, size=2)
         func_field = _make_field("modbus.func_code", relative_pos=7, size=1)
-        result = self.adapter.update_dependent_fields(payload, base_hex, func_field, [len_field, func_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, func_field, [len_field, func_field]
+        )
         # expected PDU length = 14 - 6 = 8
         updated_len = int.from_bytes(result[4:6], byteorder="big")
         assert updated_len == 8  # noqa: PLR2004
@@ -89,7 +89,9 @@ class TestModbusUpdateDependentFields:
         len_field = _make_field("mbtcp.len", relative_pos=4, size=2)
         # target IS the len field — should NOT update it
         original_bytes = bytes(payload[4:6])
-        result = self.adapter.update_dependent_fields(payload, base_hex, len_field, [len_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, len_field, [len_field]
+        )
         assert result[4:6] == bytearray(original_bytes)
 
     def test_ignores_non_length_fields(self) -> None:
@@ -97,7 +99,9 @@ class TestModbusUpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         other_field = _make_field("modbus.func_code", relative_pos=7, size=1)
         original = bytearray(payload)
-        result = self.adapter.update_dependent_fields(payload, base_hex, other_field, [other_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, other_field, [other_field]
+        )
         assert result == original
 
 
@@ -117,7 +121,9 @@ class TestModbusGetAdditionalMutations:
 
     def test_returns_empty_when_no_func_code_field(self) -> None:
         seed = "000100000006" + "01" + "03" + "00000002"
-        other_field = RawField(name="modbus.data", relative_pos=8, size=4, val="00000002")
+        other_field = RawField(
+            name="modbus.data", relative_pos=8, size=4, val="00000002"
+        )
         mutations = self.adapter.get_additional_mutations([other_field], seed)
         assert mutations == []
 
@@ -125,6 +131,7 @@ class TestModbusGetAdditionalMutations:
 # ---------------------------------------------------------------------------
 # Dnp3Adapter
 # ---------------------------------------------------------------------------
+
 
 class TestDnp3AdapterProperties:
     """Tests for Dnp3Adapter property accessors."""
@@ -177,7 +184,9 @@ class TestDnp3UpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         len_field = _make_field("dnp3.len", relative_pos=0, size=1)
         func_field = _make_field("dnp3.ctl.func", relative_pos=4, size=1)
-        result = self.adapter.update_dependent_fields(payload, base_hex, func_field, [len_field, func_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, func_field, [len_field, func_field]
+        )
         # expected: 6 - 2 = 4
         assert result[0] == 4  # noqa: PLR2004
 
@@ -187,7 +196,9 @@ class TestDnp3UpdateDependentFields:
         crc_field = _make_field("dnp3.crc", relative_pos=6, size=2)
         func_field = _make_field("dnp3.ctl.func", relative_pos=2, size=1)
         # Should not raise
-        result = self.adapter.update_dependent_fields(payload, base_hex, func_field, [crc_field, func_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, func_field, [crc_field, func_field]
+        )
         assert isinstance(result, bytearray)
 
     def test_skips_length_field_when_target(self) -> None:
@@ -195,7 +206,9 @@ class TestDnp3UpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         len_field = _make_field("dnp3.len", relative_pos=0, size=1)
         original_byte = payload[0]
-        result = self.adapter.update_dependent_fields(payload, base_hex, len_field, [len_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, len_field, [len_field]
+        )
         assert result[0] == original_byte
 
     def test_skips_crc_field_when_target(self) -> None:
@@ -203,7 +216,9 @@ class TestDnp3UpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         crc_field = _make_field("dnp3.crc", relative_pos=6, size=2)
         original = bytearray(payload)
-        result = self.adapter.update_dependent_fields(payload, base_hex, crc_field, [crc_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, crc_field, [crc_field]
+        )
         assert result == original
 
     def test_get_additional_mutations_returns_empty(self) -> None:
@@ -228,18 +243,19 @@ class TestDnp3CalculateCrc:
         assert 0 <= crc <= 0xFFFF
 
     def test_deterministic(self) -> None:
-        data = bytearray(b"\xDE\xAD\xBE\xEF")
+        data = bytearray(b"\xde\xad\xbe\xef")
         assert self.adapter._calculate_crc(data) == self.adapter._calculate_crc(data)
 
     def test_different_data_produces_different_crc(self) -> None:
         crc1 = self.adapter._calculate_crc(bytearray(b"\x00"))
-        crc2 = self.adapter._calculate_crc(bytearray(b"\xFF"))
+        crc2 = self.adapter._calculate_crc(bytearray(b"\xff"))
         assert crc1 != crc2
 
 
 # ---------------------------------------------------------------------------
 # S7CommAdapter
 # ---------------------------------------------------------------------------
+
 
 class TestS7CommAdapterProperties:
     """Tests for S7CommAdapter property accessors."""
@@ -291,7 +307,9 @@ class TestS7CommUpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         len_field = _make_field("s7comm.header.len", relative_pos=2, size=2)
         func_field = _make_field("s7comm.param.func", relative_pos=14, size=1)
-        result = self.adapter.update_dependent_fields(payload, base_hex, func_field, [len_field, func_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, func_field, [len_field, func_field]
+        )
         updated_len = int.from_bytes(result[2:4], byteorder="big")
         assert updated_len == 19  # noqa: PLR2004
 
@@ -300,7 +318,9 @@ class TestS7CommUpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         len_field = _make_field("s7comm.header.dlen", relative_pos=2, size=2)
         original = bytearray(payload)
-        result = self.adapter.update_dependent_fields(payload, base_hex, len_field, [len_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, len_field, [len_field]
+        )
         assert result == original
 
     def test_ignores_non_length_fields(self) -> None:
@@ -308,7 +328,9 @@ class TestS7CommUpdateDependentFields:
         payload = bytearray(bytes.fromhex(base_hex))
         other_field = _make_field("s7comm.param.func", relative_pos=5, size=1)
         original = bytearray(payload)
-        result = self.adapter.update_dependent_fields(payload, base_hex, other_field, [other_field])
+        result = self.adapter.update_dependent_fields(
+            payload, base_hex, other_field, [other_field]
+        )
         assert result == original
 
     def test_get_additional_mutations_returns_empty(self) -> None:

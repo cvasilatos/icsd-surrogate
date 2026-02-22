@@ -40,40 +40,6 @@ praetor = { git = "https://github.com/cvasilatos/praetor.git" }
 cursusd = { git = "https://github.com/cvasilatos/cursusd.git" }
 decimalog = { git = "https://github.com/cvasilatos/decimalog.git" }
 
-[tool.ruff]
-line-length = 180
-target-version = "py312"
-exclude = [".git", ".mypy_cache", ".ruff_cache"]
-src = ["./src"]
-
-[tool.ruff.lint]
-select = ["ALL"]
-ignore = [
-    # "PLR0913",
-    # "PLR2004",
-    # "G004",
-    # "INP001",
-    # "ANN401",
-    # "COM812",
-    # "TRY003",
-    # "EM101",
-    # "EM102",
-    # "ERA001",
-    # "BLE001",
-    # "T201",
-    # "S311",
-    # "C408",
-    # "S101",
-    # "PERF203",
-]
-
-[tool.ruff.lint.isort]
-combine-as-imports = true
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-
 [tool.ty.environment]
 python = "./.venv/bin/python"
 python-version = "3.12"
@@ -83,7 +49,7 @@ root = ["src"]
 all = "error"
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.coverage.run]

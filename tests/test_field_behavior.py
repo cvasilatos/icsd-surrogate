@@ -1,7 +1,5 @@
 """Tests for proteus.model.field_behavior."""
 
-import pytest
-
 from proteus.model.field_behavior import FieldBehavior
 
 

@@ -1,10 +1,8 @@
 """Tests for proteus.utils.socket_manager."""
 
-import socket
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from proteus.utils.socket_manager import SocketManager
 
 
@@ -13,7 +11,9 @@ class TestSocketManagerConnect:
 
     def test_connect_creates_socket(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502)
             mgr.connect()
             mock_sock.connect.assert_called_once_with(("127.0.0.1", 502))
@@ -21,7 +21,9 @@ class TestSocketManagerConnect:
 
     def test_connect_uses_custom_timeout(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502, timeout=5.0)
             mgr.connect()
             mock_sock.settimeout.assert_called_once_with(5.0)
@@ -32,7 +34,9 @@ class TestSocketManagerSend:
 
     def test_send_calls_sendall(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502)
             mgr.connect()
             mgr.send(b"\x01\x02")
@@ -50,7 +54,9 @@ class TestSocketManagerReceive:
     def test_receive_calls_recv(self) -> None:
         mock_sock = MagicMock()
         mock_sock.recv.return_value = b"\xde\xad"
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502)
             mgr.connect()
             result = mgr.receive(1024)
@@ -68,7 +74,9 @@ class TestSocketManagerClose:
 
     def test_close_closes_socket(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502)
             mgr.connect()
             mgr.close()
@@ -85,7 +93,9 @@ class TestSocketManagerReconnect:
 
     def test_reconnect_closes_and_reconnects(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             mgr = SocketManager("127.0.0.1", 502)
             mgr.connect()
             mgr.reconnect()
@@ -98,14 +108,18 @@ class TestSocketManagerContextManager:
 
     def test_context_manager_connects_and_closes(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             with SocketManager("127.0.0.1", 502) as mgr:
                 assert mgr._sock is mock_sock
             mock_sock.close.assert_called_once()
 
     def test_context_manager_closes_on_exception(self) -> None:
         mock_sock = MagicMock()
-        with patch("proteus.utils.socket_manager.socket.socket", return_value=mock_sock):
+        with patch(
+            "proteus.utils.socket_manager.socket.socket", return_value=mock_sock
+        ):
             with pytest.raises(RuntimeError):
                 with SocketManager("127.0.0.1", 502):
                     raise RuntimeError("test error")

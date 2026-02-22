@@ -1,8 +1,5 @@
 """Tests for proteus.results.packet_struct."""
 
-from io import StringIO
-from unittest.mock import patch
-
 from proteus.model.field_behavior import FieldBehavior
 from proteus.model.raw_field import RawField
 from proteus.results.packet_struct import PacketStruct

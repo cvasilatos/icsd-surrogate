@@ -1,7 +1,5 @@
 """Tests for proteus.utils.packet_manipulator."""
 
-import pytest
-
 from proteus.model.raw_field import RawField
 from proteus.protocols.modbus import ModbusAdapter
 from proteus.utils.packet_manipulator import PacketManipulator
@@ -50,19 +48,25 @@ class TestInjectMutation:
     def test_replaces_single_byte(self) -> None:
         base = "0102030405"
         target = _make_field("f", "02", 1, 1)
-        result = PacketManipulator.inject_mutation(target, base, "ff", unique_fields=[target])
+        result = PacketManipulator.inject_mutation(
+            target, base, "ff", unique_fields=[target]
+        )
         assert result[1] == 0xFF
 
     def test_replaces_multi_byte(self) -> None:
         base = "0102030405"
         target = _make_field("f", "0203", 1, 2)
-        result = PacketManipulator.inject_mutation(target, base, "aabb", unique_fields=[target])
+        result = PacketManipulator.inject_mutation(
+            target, base, "aabb", unique_fields=[target]
+        )
         assert result[1:3] == bytes.fromhex("aabb")
 
     def test_does_not_modify_other_bytes_without_adapter(self) -> None:
         base = "0102030405"
         target = _make_field("f", "03", 2, 1)
-        result = PacketManipulator.inject_mutation(target, base, "cc", unique_fields=[target])
+        result = PacketManipulator.inject_mutation(
+            target, base, "cc", unique_fields=[target]
+        )
         assert result[0] == 0x01
         assert result[1] == 0x02
         assert result[2] == 0xCC
@@ -80,7 +84,11 @@ class TestInjectMutation:
         func_field = RawField(name="modbus.func_code", relative_pos=7, size=1, val="03")
         adapter = ModbusAdapter()
         result = PacketManipulator.inject_mutation(
-            func_field, base, "04", unique_fields=[len_field, func_field], adapter=adapter
+            func_field,
+            base,
+            "04",
+            unique_fields=[len_field, func_field],
+            adapter=adapter,
         )
         assert isinstance(result, bytearray)
         assert result[7] == 0x04

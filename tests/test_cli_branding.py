@@ -1,10 +1,7 @@
 """Tests for proteus.model.cli_branding."""
 
 import json
-from pathlib import Path
-from unittest.mock import MagicMock, mock_open, patch
-
-import pytest
+from unittest.mock import mock_open, patch
 
 from proteus.model.cli_branding import CliBranding
 
