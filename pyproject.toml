@@ -15,7 +15,6 @@ description = "The ICSClone progression"
 requires-python = ">=3.12"
 dependencies = [
     "ruff",
-    "mypy",
     "pyright",
     "readmeai",
     "pre-commit",
@@ -26,6 +25,11 @@ dependencies = [
     "praetor",
     "cursusd",
     "click>=8.3.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
 ]
 
 [tool.uv]
@@ -45,22 +49,22 @@ src = ["./src"]
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "PLR0913",
-    "PLR2004",
-    "G004",
-    "INP001",
-    "ANN401",
-    "COM812",
-    "TRY003",
-    "EM101",
-    "EM102",
-    "ERA001",
-    "BLE001",
-    "T201",
-    "S311",
-    "C408",
-    "S101",
-    "PERF203",
+    # "PLR0913",
+    # "PLR2004",
+    # "G004",
+    # "INP001",
+    # "ANN401",
+    # "COM812",
+    # "TRY003",
+    # "EM101",
+    # "EM102",
+    # "ERA001",
+    # "BLE001",
+    # "T201",
+    # "S311",
+    # "C408",
+    # "S101",
+    # "PERF203",
 ]
 
 [tool.ruff.lint.isort]
