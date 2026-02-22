@@ -108,7 +108,7 @@ class ProtocolFuzzer:
         new_seeds: list[str] = []
 
         for val in self._adapter.structural_function_codes:
-            base_packet = construct_prefix(fields, stop_at_name=pivot_field.name)
+            base_packet: bytes = construct_prefix(fields, stop_at_name=pivot_field.name)
             base_packet += bytes.fromhex(val)
 
             for payload_len in self._adapter.structural_payload_lengths:
