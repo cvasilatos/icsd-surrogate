@@ -6,4 +6,4 @@ dist/
 build/
 .coverage
 .pytest_cache/
-log/
+logs/
