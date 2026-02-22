@@ -18,7 +18,7 @@ from proteus.model.raw_field import EnhancedJSONEncoder, FieldBehavior, RawField
 from proteus.protocols.registry import ProtocolAdapterRegistry
 from proteus.results.packet_struct import PacketStruct
 from proteus.utils.constants import DEFAULT_HOST, VALIDATION_TIMEOUT
-from proteus.utils.packet_manipulator import PacketManipulator
+from proteus.utils.packet_manipulator import construct_prefix
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
 
@@ -108,7 +108,7 @@ class ProtocolFuzzer:
         new_seeds: list[str] = []
 
         for val in self._adapter.structural_function_codes:
-            base_packet = PacketManipulator.construct_prefix(fields, stop_at_name=pivot_field.name)
+            base_packet = construct_prefix(fields, stop_at_name=pivot_field.name)
             base_packet += bytes.fromhex(val)
 
             for payload_len in self._adapter.structural_payload_lengths:

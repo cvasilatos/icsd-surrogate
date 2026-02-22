@@ -6,7 +6,7 @@ mutations and observing server responses to classify field behavior. This includ
 
 import difflib
 import logging
-import random
+import secrets
 from typing import TYPE_CHECKING, Any, cast
 
 import plotly.graph_objects as go
@@ -16,9 +16,11 @@ from praetor.protocol_info import ProtocolInfo
 from proteus.model.raw_field import FieldBehavior, RawField
 from proteus.protocols.registry import ProtocolAdapterRegistry
 from proteus.utils.constants import CONSTRAINED_THRESHOLD, DEFAULT_MUTATION_SAMPLE_SIZE, FUZZABLE_THRESHOLD
-from proteus.utils.packet_manipulator import PacketManipulator
+from proteus.utils.packet_manipulator import inject_mutation
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
+
+SIMILARITY_THRESHOLD = 0.85
 
 if TYPE_CHECKING:
     from decimalog.logger import CustomLogger
@@ -50,7 +52,7 @@ class DynamicFieldAnalyzer:
         sample_size = min(sample_size, total_possibilities)
         self.logger.trace(f"Generating {sample_size} random byte combinations for {num_bytes}-byte field")
 
-        return [tuple(random.choices(range(256), k=num_bytes)) for _ in range(sample_size)]
+        return [tuple(secrets.randbelow(256) for _ in range(num_bytes)) for _ in range(sample_size)]
 
     def cluster_responses_plotly(self, seed_hex: str) -> None:
         """Cluster responses based on similarity to the seed packet and visualize using Plotly to identify potential exceptions or valid variations."""
@@ -71,16 +73,7 @@ class DynamicFieldAnalyzer:
             ratio: int | float = matcher.ratio()
             self.logger.trace(f"Request packet: length={curr_len}, similarity={ratio:.3f}")
 
-            data.append(
-                {
-                    "hex": req,
-                    "length": curr_len,
-                    "similarity": ratio,
-                    "type": "Request (Sent)",
-                    "color": "orchid",
-                    "size": 8,
-                }
-            )
+            data.append({"hex": req, "length": curr_len, "similarity": ratio, "type": "Request (Sent)", "color": "orchid", "size": 8})
 
         self.logger.debug(f"Analyzing {len(self._responses)} response packets")
         for resp in self._responses:
@@ -95,7 +88,7 @@ class DynamicFieldAnalyzer:
                 color = "crimson"
                 size = 12
                 self.logger.trace(f"Classified as exception: length={curr_len} (<60% of seed)")
-            elif ratio > 0.85:
+            elif ratio > SIMILARITY_THRESHOLD:
                 category = "Valid Variation"
                 color = "mediumseagreen"
                 size = 10
@@ -106,16 +99,7 @@ class DynamicFieldAnalyzer:
                 size = 8
                 self.logger.trace(f"Classified as outlier: length={curr_len}, similarity={ratio:.3f}")
 
-            data.append(
-                {
-                    "hex": resp,
-                    "length": curr_len,
-                    "similarity": ratio,
-                    "type": category,
-                    "color": color,
-                    "size": size,
-                }
-            )
+            data.append({"hex": resp, "length": curr_len, "similarity": ratio, "type": category, "color": color, "size": size})
 
         self.logger.info("Building plotly visualization with categorized data points")
         fig = go.Figure()
@@ -132,10 +116,10 @@ class DynamicFieldAnalyzer:
                     y=[d["similarity"] for d in subset],
                     mode="markers",
                     name=cat,
-                    marker=dict(color=[d["color"] for d in subset], size=[d["size"] for d in subset], line=dict(width=1, color="DarkSlateGrey")),
+                    marker={"color": [d["color"] for d in subset], "size": [d["size"] for d in subset], "line": {"width": 1, "color": "DarkSlateGrey"}},
                     text=[f"HEX: {d['hex']}" for d in subset],
                     hovertemplate="<b>%{text}</b><br><br>Length: %{x:.1f} bytes<br>Similarity: %{y:.2f}<br><extra></extra>",
-                )
+                ),
             )
 
         self.logger.info("Applying layout styling and displaying plot")
@@ -144,7 +128,7 @@ class DynamicFieldAnalyzer:
             xaxis_title="Response Length (Bytes)",
             yaxis_title="Structural Similarity to Seed (0-1)",
             template="plotly_white",
-            legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
+            legend={"yanchor": "top", "y": 0.99, "xanchor": "left", "x": 0.01},
             height=600,
         )
 
@@ -174,7 +158,7 @@ class DynamicFieldAnalyzer:
                 self.logger.debug(f"    [*] Field: {f.name}, testing mutation value: {mutation_hex}, original: {seed[f.relative_pos * 2 : (f.relative_pos + f.size) * 2]}")
 
                 try:
-                    mutated_hex: str = PacketManipulator.inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields, adapter=self._adapter).hex()
+                    mutated_hex: str = inject_mutation(f, seed, mutation_hex, unique_fields=unique_fields, adapter=self._adapter).hex()
                     self._validator.validate(mutated_hex, is_request=True)
                     self._socket_manager.send(bytes.fromhex(mutated_hex))
                     self._requests.append(mutated_hex)
@@ -185,7 +169,7 @@ class DynamicFieldAnalyzer:
                         self.logger.debug(f"    [OK] Field: {f.name}, Mutation Accepted: {mutation_hex}, Response: {response.hex()}")
                         f.valid_values.append(mutation_hex)
 
-                except Exception as e:
+                except (ValueError, ConnectionError, OSError, TimeoutError) as e:
                     self.logger.trace(f"    [ERROR] Exception during mutation testing: {e}")
                     if f.invalid_values.get(str(e)) is None:
                         f.invalid_values[str(e)] = []

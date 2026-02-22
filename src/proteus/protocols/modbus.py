@@ -6,7 +6,7 @@ import struct
 from typing import TYPE_CHECKING, ClassVar
 
 from proteus.protocols.base import ProtocolAdapter
-from proteus.utils.packet_manipulator import PacketManipulator
+from proteus.utils.packet_manipulator import inject_mutation
 
 if TYPE_CHECKING:
     from proteus.model.raw_field import RawField
@@ -42,13 +42,7 @@ class ModbusAdapter(ProtocolAdapter):
         end_pos = start_pos + len_field.size + 1
         return packet_bytes[:start_pos] + b"\x00" + length_bytes + packet_bytes[end_pos:]
 
-    def update_dependent_fields(
-        self,
-        payload: bytearray,
-        base_payload_hex: str,
-        target_field: RawField,
-        unique_fields: list[RawField],
-    ) -> bytearray:
+    def update_dependent_fields(self, payload: bytearray, base_payload_hex: str, target_field: RawField, unique_fields: list[RawField]) -> bytearray:
         """Recalculate Modbus length fields after a mutation has been injected."""
         for field in unique_fields:
             if ".len" in field.name.lower() and target_field.name != field.name:
@@ -64,8 +58,5 @@ class ModbusAdapter(ProtocolAdapter):
         mutations: list[str] = []
         for field in fields:
             if field.name == self.pivot_field_name:
-                mutations.extend(
-                    PacketManipulator.inject_mutation(field, seed, "ff", unique_fields=fields, adapter=self).hex()
-                    for _ in range(100)
-                )
+                mutations.extend(inject_mutation(field, seed, "ff", unique_fields=fields, adapter=self).hex() for _ in range(100))
         return mutations
