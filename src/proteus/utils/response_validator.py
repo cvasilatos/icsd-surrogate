@@ -6,6 +6,8 @@ to avoid code duplication across multiple modules.
 
 from proteus.utils.constants import ERROR_CODE_SUFFIX, INVALID_RESPONSE_PREFIX
 
+MAX_ERROR_CODE_LENGTH = 4
+
 
 def is_valid_response(response: bytes) -> bool:
     """Check if a server response is valid and meaningful.
@@ -20,18 +22,14 @@ def is_valid_response(response: bytes) -> bool:
 
     Returns:
         True if the response is valid, False otherwise
+
     """
     if len(response) == 0:
         return False
 
     response_hex = response.hex()
 
-    # Check for invalid header (all zeros)
     if response_hex.startswith(INVALID_RESPONSE_PREFIX):
         return False
 
-    # Check if response is just an error code
-    if response_hex.endswith(ERROR_CODE_SUFFIX) and len(response_hex) <= 4:
-        return False
-
-    return True
+    return not (response_hex.endswith(ERROR_CODE_SUFFIX) and len(response_hex) <= MAX_ERROR_CODE_LENGTH)

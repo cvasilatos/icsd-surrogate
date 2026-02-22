@@ -1,7 +1,6 @@
 """Configuration constants for Proteus protocol fuzzer."""
 
 DEFAULT_HOST = "localhost"
-DEFAULT_PORT = 5020
 DEFAULT_TIMEOUT = 1.0
 VALIDATION_TIMEOUT = 0.01
 

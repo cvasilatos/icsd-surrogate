@@ -17,7 +17,7 @@ from proteus.model.cli_branding import CliBranding
 from proteus.model.raw_field import EnhancedJSONEncoder, FieldBehavior, RawField
 from proteus.protocols.registry import ProtocolAdapterRegistry
 from proteus.results.packet_struct import PacketStruct
-from proteus.utils.constants import DEFAULT_HOST, DEFAULT_PORT, VALIDATION_TIMEOUT
+from proteus.utils.constants import DEFAULT_HOST, VALIDATION_TIMEOUT
 from proteus.utils.packet_manipulator import PacketManipulator
 from proteus.utils.response_validator import is_valid_response
 from proteus.utils.socket_manager import SocketManager
@@ -55,7 +55,7 @@ class ProtocolFuzzer:
 
         self.logger.debug(f"[+] Initializing Protocol Fuzzer for protocol: {protocol}")
 
-        server_starter = Starter(protocol, DEFAULT_PORT, delay=3)
+        server_starter = Starter(protocol, self._protocol_info.custom_port, delay=3)
         server_starter.start_server()
 
         self._protocol_info: ProtocolInfo = ProtocolInfo.from_name(protocol)
@@ -119,7 +119,7 @@ class ProtocolFuzzer:
                     candidate_pkt: bytes = self._adapter.fix_length_field(candidate_pkt, len_field)
 
                 try:
-                    self._validate_seed(DEFAULT_HOST, DEFAULT_PORT, candidate_pkt)
+                    self._validate_seed(DEFAULT_HOST, self._protocol_info.port, candidate_pkt)
                     new_seeds.append(candidate_pkt.hex())
                 except ValueError as e:
                     self.logger.trace(f"Validation failed for candidate packet: {candidate_pkt.hex()} - Error: {e}")
