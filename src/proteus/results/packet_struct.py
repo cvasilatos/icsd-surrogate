@@ -1,5 +1,3 @@
-"""Module: packet_struct.py."""
-
 from rich.console import Console
 from rich.table import Table
 
@@ -28,6 +26,13 @@ class PacketStruct:
         for item in fuzzing_plan:
             behavior_markup = f"[{item.behavior.color}]{item.behavior.value}[/{item.behavior.color}]"
             table.add_row(
-                behavior_markup, item.name, str(item.relative_pos), str(item.size), str(item.val), str(item.valid_values[:5]), str(item.invalid_values), str(item.accepted)
+                behavior_markup,
+                item.name,
+                str(item.relative_pos),
+                str(item.size),
+                str(item.val),
+                str(item.valid_values[:5]),
+                str(item.invalid_values),
+                str(item.accepted),
             )
         Console().print(table)

@@ -1,5 +1,3 @@
-"""ProteusD: A Protocol Fuzzer for ICS Protocols."""
-
 import json
 import logging
 import secrets
@@ -135,7 +133,6 @@ class ProtocolFuzzer:
         """
         for field in fields:
             if self._adapter.pivot_field_name in field.name:
-                print(f"Selected Structural Pivot: {field.name}")
                 return field
         raise ValueError("No suitable pivot field found for structural analysis.")
 
@@ -174,7 +171,6 @@ class ProtocolFuzzer:
         for val in self._adapter.structural_function_codes:
             base_packet = PacketManipulator.construct_prefix(fields, stop_at_name=pivot_field.name)
             base_packet += bytes.fromhex(val)
-            print(f"Base Packet with new pivot {val}: {base_packet.hex()}")
 
             for payload_len in self._adapter.structural_payload_lengths:
                 payload = b"\x00" * payload_len
@@ -186,7 +182,7 @@ class ProtocolFuzzer:
                 try:
                     self._validate_seed(DEFAULT_HOST, DEFAULT_PORT, candidate_pkt)
                     new_seeds.append(candidate_pkt.hex())
-                except Exception as e:
+                except ValueError as e:
                     self.logger.trace(f"Validation failed for candidate packet: {candidate_pkt.hex()} - Error: {e}")
 
         return new_seeds
@@ -194,23 +190,20 @@ class ProtocolFuzzer:
     def _find_structural_variants2(self, new_seeds: list[str], pivot_field: RawField) -> None:
         for seed in new_seeds:
             explorer = ProtocolExplorer(seed, self._protocol_info.name)
-            try:
-                explorer.dissect()
+            explorer.dissect()
 
-                analyzer = DynamicFieldAnalyzer(self._protocol_info.name)
-                analyzer.analyze(seed, explorer.raw_fields)
+            analyzer = DynamicFieldAnalyzer(self._protocol_info.name)
+            analyzer.analyze(seed, explorer.raw_fields)
 
-                self._packet_struct_viewer.print_plan(explorer.raw_fields)
-                mutated_packet = seed
-                for field in explorer.raw_fields:
-                    if field.behavior == FieldBehavior.FUZZABLE and field.name != pivot_field.name:
-                        self.logger.info(f"Mutating field {field.name} at pos {field.relative_pos} with size {field.size}")
-                        mutated_val = secrets.token_hex(field.size)
-                        mutated_packet = mutated_packet[: field.relative_pos * 2] + mutated_val + mutated_packet[(field.relative_pos + field.size) * 2 :]
+            self._packet_struct_viewer.print_plan(explorer.raw_fields)
+            mutated_packet = seed
+            for field in explorer.raw_fields:
+                if field.behavior == FieldBehavior.FUZZABLE and field.name != pivot_field.name:
+                    self.logger.info(f"Mutating field {field.name} at pos {field.relative_pos} with size {field.size}")
+                    mutated_val = secrets.token_hex(field.size)
+                    mutated_packet = mutated_packet[: field.relative_pos * 2] + mutated_val + mutated_packet[(field.relative_pos + field.size) * 2 :]
 
-                self.logger.info(f"Testing mutation for all fuzzable fields: {mutated_packet}")
-            except Exception as e:
-                self.logger.warning(f"Failed to dissect new seed {seed}: {e}")
+            self.logger.info(f"Testing mutation for all fuzzable fields: {mutated_packet}")
 
     def _validate_seed(self, target_ip: str, target_port: int, seed_bytes: bytes) -> dict:
         """Validate a seed packet by sending it to the server and checking the response.
