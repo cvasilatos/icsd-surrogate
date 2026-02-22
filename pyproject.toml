@@ -77,3 +77,14 @@ root = ["src"]
 
 [tool.ty.rules]
 all = "error"
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src/proteus"]
+omit = ["src/proteus/proteusd.py", "src/proteus/analyzers/*"]
+
+[tool.coverage.report]
+show_missing = true
