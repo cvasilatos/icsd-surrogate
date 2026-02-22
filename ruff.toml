@@ -4,25 +4,6 @@ exclude = [".git", ".mypy_cache", ".ruff_cache"]
 src = ["./src"]
 
 lint.select = ["ALL"]
-lint.ignore = [
-    # "PLR0913",
-    # "PLR2004",
-    # "G004",
-    # "INP001",
-    # "ANN401",
-    # "COM812",
-    # "TRY003",
-    # "EM101",
-    # "EM102",
-    # "ERA001",
-    # "BLE001",
-    # "T201",
-    # "S311",
-    # "C408",
-    # "S101",
-    # "PERF203",
-]
-
 
 lint.isort = { combine-as-imports = true }
 format = { quote-style = "double", indent-style = "space" }
